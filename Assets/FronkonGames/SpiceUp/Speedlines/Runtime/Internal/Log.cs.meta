@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 96f8c5b3d1ba8794797c3cfd773529d2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Runtime/Internal/Log.cs
+  uploadId: 784580

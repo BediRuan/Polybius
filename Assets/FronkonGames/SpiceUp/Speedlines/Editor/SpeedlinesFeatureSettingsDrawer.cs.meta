@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 08c14c24253af8842982f14996297cdf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Editor/SpeedlinesFeatureSettingsDrawer.cs
+  uploadId: 784580

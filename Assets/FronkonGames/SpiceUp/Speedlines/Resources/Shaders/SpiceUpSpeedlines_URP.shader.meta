@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f35c25179fb7a6f4c8a7683bd2bde3fb
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Resources/Shaders/SpiceUpSpeedlines_URP.shader
+  uploadId: 784580

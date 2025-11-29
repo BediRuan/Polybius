@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 571332c0b0b6b8e4fbb45809cba542f4
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Resources/Shaders/ColorBlend.hlsl
+  uploadId: 784580

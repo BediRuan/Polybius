@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: da7dcf8f694d73341998e26d1442268b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Demo/Scripts/TilingCube.cs
+  uploadId: 784580

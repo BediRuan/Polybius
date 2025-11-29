@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8b81fa3996550cd4b8ade41728eccd73
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Editor/FronkonGames.SpiceUp.Speedlines.Editor.asmdef
+  uploadId: 784580

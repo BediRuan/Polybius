@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 21c1a8d1ebaa6d2448b857134267a8fa
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Resources/Shaders/SpiceUp.hlsl
+  uploadId: 784580

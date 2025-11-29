@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8e90c2407f7b044a5693f2536eeab0, type: 3}
+  m_Name: Kutchie's Pie
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  id: 
+  cardName: Kutchie's Pie
+  artwork: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  cost: 1
+  damage: 0
+  hitCount: 0
+  healAmount: 5
+  description: 
+  prefab: {fileID: 1004518401466487839, guid: 72de7a441b9045348a20563ba26c2eef, type: 3}

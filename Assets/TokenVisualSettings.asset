@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb5d4ad3fc0e0649a5599137ebd48a4, type: 3}
+  m_Name: TokenVisualSettings
+  m_EditorClassIdentifier: Assembly-CSharp::TokenVisualSettings
+  highlightColor: {r: 0, g: 1, b: 1, a: 1}
+  useBreath: 1
+  baseScale: 1
+  breathAmplitude: 0.2
+  breathSpeedNormal: 2
+  breathSpeedHover: 2
+  useClickPop: 1
+  clickPopScale: 1.2
+  clickPopDuration: 0.15
+  useGlow: 1
+  glowColor: {r: 0, g: 1, b: 1, a: 1}
+  glowWidth: 0.2
+  glowWidthHover: 0.2
+  useShakeOnHover: 1
+  shakeTag: shake

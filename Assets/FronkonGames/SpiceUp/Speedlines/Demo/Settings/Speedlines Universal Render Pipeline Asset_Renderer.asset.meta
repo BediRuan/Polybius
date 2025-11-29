@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4cd3e36085498bb449aba6ded014dda0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Demo/Settings/Speedlines Universal
+    Render Pipeline Asset_Renderer.asset
+  uploadId: 784580

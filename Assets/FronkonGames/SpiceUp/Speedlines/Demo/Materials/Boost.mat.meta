@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 06dd6e938aea68d4f9b6bab0eef7299d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250408
+  packageName: 'Spice Up: Speed Lines'
+  packageVersion: 2.1.3
+  assetPath: Assets/FronkonGames/SpiceUp/Speedlines/Demo/Materials/Boost.mat
+  uploadId: 784580
