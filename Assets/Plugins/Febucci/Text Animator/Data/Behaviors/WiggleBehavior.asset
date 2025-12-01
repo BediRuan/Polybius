@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WiggleBehavior
   m_EditorClassIdentifier: Febucci.TextAnimator.Runtime::Febucci.UI.Effects.WiggleBehavior
   tagID: wiggle
-  baseAmplitude: 4.74
-  baseFrequency: 7.82
-  baseWaveSize: 0.551
+  baseAmplitude: 1.18
+  baseFrequency: 2.05
+  baseWaveSize: 0.441

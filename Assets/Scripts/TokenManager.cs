@@ -58,7 +58,7 @@ public class TokenManager : MonoBehaviour
 
         int index = Random.Range(0, tokens.Count);
         int value = tokens[index];
-        tokens.RemoveAt(index);
+        //tokens.RemoveAt(index);
         return value;
     }
 }

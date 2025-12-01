@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class HandManager : MonoBehaviour
@@ -15,8 +15,8 @@ public class HandManager : MonoBehaviour
     [Header("Deck Setup")]
     public List<CardData> startingCards = new List<CardData>();
 
-    public RectTransform drawPileAnchor;      // ·¢ÅÆ´ÓÕâÀï·É³öÀ´
-    public RectTransform discardPileAnchor;   // ÆúÅÆ·ÉÏòÕâÀï
+    public RectTransform drawPileAnchor;      // å‘ç‰Œä»è¿™é‡Œé£å‡ºæ¥
+    public RectTransform discardPileAnchor;   // å¼ƒç‰Œé£å‘è¿™é‡Œ
 
     public CardUI discardFlyPrefab;
 
@@ -47,7 +47,7 @@ public class HandManager : MonoBehaviour
         }
 
         Shuffle(drawPile);
-        Debug.Log($"ÅÆ¿âÖØÖÃÍê³É¡£³éÅÆ¶ÑÕÅÊı£º{drawPile.Count}£¬ÆúÅÆ¶ÑÕÅÊı£º{discardPile.Count}");
+        Debug.Log($"ç‰Œåº“é‡ç½®å®Œæˆã€‚æŠ½ç‰Œå †å¼ æ•°ï¼š{drawPile.Count}ï¼Œå¼ƒç‰Œå †å¼ æ•°ï¼š{discardPile.Count}");
     }
 
     private void Shuffle(List<CardInstance> list)
@@ -75,7 +75,7 @@ public class HandManager : MonoBehaviour
         {
             if (discardPile.Count == 0)
             {
-                Debug.Log("Ã»ÓĞÅÆ¿ÉÒÔ³éÁË£¡");
+                Debug.Log("æ²¡æœ‰ç‰Œå¯ä»¥æŠ½äº†ï¼");
                 return;
             }
 
@@ -83,7 +83,7 @@ public class HandManager : MonoBehaviour
             discardPile.Clear();
             Shuffle(drawPile);
 
-            Debug.Log($"´ÓÆúÅÆ¶ÑÏ´ÅÆ»Ø³éÅÆ¶Ñ£¬ÏÖÔÚÓĞ {drawPile.Count} ÕÅ");
+            Debug.Log($"ä»å¼ƒç‰Œå †æ´—ç‰Œå›æŠ½ç‰Œå †ï¼Œç°åœ¨æœ‰ {drawPile.Count} å¼ ");
         }
 
         CardInstance top = drawPile[0];
@@ -102,24 +102,24 @@ public class HandManager : MonoBehaviour
         HandCardView view = cardUI.GetComponent<HandCardView>();
         if (view == null)
         {
-            Debug.LogError("Card prefab ÉÏÈ±ÉÙ HandCardView ×é¼ş£¡");
+            Debug.LogError("Card prefab ä¸Šç¼ºå°‘ HandCardView ç»„ä»¶ï¼");
             return;
         }
 
-        // ? ·¢ÅÆ¶¯»­£ºÏÈ°ÑÅÆ·Åµ½·¢ÅÆ¶ÑÃªµãµÄÎ»ÖÃ
+        // ? å‘ç‰ŒåŠ¨ç”»ï¼šå…ˆæŠŠç‰Œæ”¾åˆ°å‘ç‰Œå †é”šç‚¹çš„ä½ç½®
         RectTransform cardRect = cardUI.GetComponent<RectTransform>();
         if (drawPileAnchor != null)
         {
-            // ×¢Òâ£ºÇ°ÌáÊÇ drawPileAnchor ºÍ handArea ÔÚÍ¬Ò»¸ö×ø±êÏµÏÂ
+            // æ³¨æ„ï¼šå‰ææ˜¯ drawPileAnchor å’Œ handArea åœ¨åŒä¸€ä¸ªåæ ‡ç³»ä¸‹
             cardRect.anchoredPosition = drawPileAnchor.anchoredPosition;
         }
 
         view.onPlay += OnCardPlayed;
         handCards.Add(view);
 
-        // UpdateLayout »á¸øÃ¿ÕÅÅÆ¼ÆËã»¡ĞÎÉÏµÄ deckPosition / deckAngle£¬
-        // HandCardView.Update Àï»á´Óµ±Ç° anchoredPosition Æ½»¬ Lerp µ½Ä¿±êÎ»ÖÃ£¬
-        // ËùÒÔÕâÕÅÅÆ»á´Ó drawPileAnchor µÄÎ»ÖÃ»¬½øÊÖÅÆ»¡ĞÎ¡£
+        // UpdateLayout ä¼šç»™æ¯å¼ ç‰Œè®¡ç®—å¼§å½¢ä¸Šçš„ deckPosition / deckAngleï¼Œ
+        // HandCardView.Update é‡Œä¼šä»å½“å‰ anchoredPosition å¹³æ»‘ Lerp åˆ°ç›®æ ‡ä½ç½®ï¼Œ
+        // æ‰€ä»¥è¿™å¼ ç‰Œä¼šä» drawPileAnchor çš„ä½ç½®æ»‘è¿›æ‰‹ç‰Œå¼§å½¢ã€‚
         UpdateLayout();
     }
 
@@ -132,7 +132,7 @@ public class HandManager : MonoBehaviour
             {
                 discardPile.Add(ui.card);
 
-                // Ã¿ÕÅÒ²¸ø¸ö·ÉĞĞ¶¯»­
+                // æ¯å¼ ä¹Ÿç»™ä¸ªé£è¡ŒåŠ¨ç”»
                 PlayDiscardFlyAnimation(ui);
             }
 
@@ -142,7 +142,7 @@ public class HandManager : MonoBehaviour
         handCards.Clear();
         UpdateLayout();
 
-        Debug.Log($"ÆúµôÕûÊÖÅÆ¡£µ±Ç°³éÅÆ¶Ñ£º{drawPile.Count}£¬ÆúÅÆ¶Ñ£º{discardPile.Count}");
+        Debug.Log($"å¼ƒæ‰æ•´æ‰‹ç‰Œã€‚å½“å‰æŠ½ç‰Œå †ï¼š{drawPile.Count}ï¼Œå¼ƒç‰Œå †ï¼š{discardPile.Count}");
     }
 
 
@@ -154,17 +154,26 @@ public class HandManager : MonoBehaviour
 
         CardInstance card = ui.card;
 
-        // °ÑĞ§¹û½»¸ø×¨ÃÅµÄ½âÎöÆ÷
+        bool playedSuccessfully = true;   // é»˜è®¤å½“æˆæˆåŠŸ
+
         if (effectResolver != null)
         {
-            effectResolver.Resolve(card);
+            playedSuccessfully = effectResolver.Resolve(card);
         }
         else
         {
-            Debug.LogWarning("Î´ÉèÖÃ CardEffectResolver£¬¿¨ÅÆĞ§¹û²»»áÉúĞ§¡£");
+            Debug.LogWarning("æœªè®¾ç½® CardEffectResolverï¼Œå¡ç‰Œæ•ˆæœä¸ä¼šç”Ÿæ•ˆã€‚");
         }
 
-        // ´ò³öºóÕâÕÅÅÆÍ³Í³½øÆúÅÆ¶Ñ
+        // â— å¦‚æœå¤±è´¥ï¼ˆæ¯”å¦‚èƒ½é‡ä¸è¶³ï¼‰ï¼Œå¡ç‰Œç•™åœ¨æ‰‹ç‰Œï¼Œä¸è¿›å…¥å¼ƒç‰Œå †
+        if (!playedSuccessfully)
+        {
+            Debug.Log($"[HandManager] å¡ç‰Œ {card.template.cardName} ä½¿ç”¨å¤±è´¥ï¼Œç•™åœ¨æ‰‹ç‰Œä¸­ã€‚");
+            // HandCardView è‡ªå·±åº”è¯¥ä¼šæŠŠä½ç½®æ’å€¼å›å¼§å½¢ä¸Šçš„ç›®æ ‡ä½ç½®
+            return;
+        }
+
+        // åªæœ‰çœŸæ­£æˆåŠŸæ‰“å‡ºæ—¶ï¼Œæ‰è¿›å…¥å¼ƒç‰Œå †å¹¶é”€æ¯ UI
         discardPile.Add(card);
 
         if (handCards.Contains(view))
@@ -198,6 +207,24 @@ public class HandManager : MonoBehaviour
             handCards[i].SetDeckState(pos, angle);
         }
     }
+    public void DiscardSpecificCard(HandCardView view)
+    {
+        CardUI ui = view.GetComponent<CardUI>();
+        if (ui == null || ui.card == null)
+            return;
+
+        discardPile.Add(ui.card);
+
+        PlayDiscardFlyAnimation(ui);
+
+        if (handCards.Contains(view))
+            handCards.Remove(view);
+
+        Destroy(view.gameObject);
+        UpdateLayout();
+    }
+
+
     private void PlayDiscardFlyAnimation(CardUI sourceUI)
     {
         if (discardFlyPrefab == null || discardPileAnchor == null)
@@ -206,8 +233,8 @@ public class HandManager : MonoBehaviour
         RectTransform sourceRect = sourceUI.GetComponent<RectTransform>();
         if (sourceRect == null) return;
 
-        // Éú³ÉÒ»ÕÅÔ¤ÀÀ¿¨£¨ÓÄÁé£©×÷ÎªÊÓ¾õ¶¯»­
-        // ×¢Òâ parent ÓÃ handArea.parent£¬ÕâÑù discardPileAnchor ºÍÓÄÁé¿¨ÔÚÍ¬Ò»×ø±êÏµÀï£º
+        // ç”Ÿæˆä¸€å¼ é¢„è§ˆå¡ï¼ˆå¹½çµï¼‰ä½œä¸ºè§†è§‰åŠ¨ç”»
+        // æ³¨æ„ parent ç”¨ handArea.parentï¼Œè¿™æ · discardPileAnchor å’Œå¹½çµå¡åœ¨åŒä¸€åæ ‡ç³»é‡Œï¼š
         Transform parent = handArea.parent != null ? handArea.parent : handArea;
 
         CardUI ghost = Instantiate(discardFlyPrefab, parent);
@@ -216,10 +243,10 @@ public class HandManager : MonoBehaviour
         RectTransform ghostRect = ghost.GetComponent<RectTransform>();
         if (ghostRect == null) return;
 
-        // ³õÊ¼Î»ÖÃ = Ô­ÊÖÅÆÔÚ parent ×ø±êÏµÏÂµÄÎ»ÖÃ
+        // åˆå§‹ä½ç½® = åŸæ‰‹ç‰Œåœ¨ parent åæ ‡ç³»ä¸‹çš„ä½ç½®
         ghostRect.anchoredPosition = sourceRect.anchoredPosition;
 
-        // ·ÉĞĞ½Å±¾
+        // é£è¡Œè„šæœ¬
         var fly = ghost.gameObject.AddComponent<CardFlyToAnchor>();
         fly.Init(sourceRect.anchoredPosition, discardPileAnchor.anchoredPosition, discardFlyDuration);
     }

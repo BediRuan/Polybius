@@ -179,14 +179,14 @@ public abstract class TokenNumberBase : MonoBehaviour,
             return;
         }
 
-        ApplyToken(token);
-
-        var s = Settings;
-        if (s.useClickPop && !isPopping)
-            StartCoroutine(ClickPopRoutine());
-
-        TokenManager.Instance.EndTokenSelection();
+        // ★ 使用 3D 掉落动画 ★
+        TokenDrawController.Instance.PlayTokenDrop(token, (finalValue) =>
+        {
+            ApplyToken(finalValue); // 动画结束后真正使用
+            TokenManager.Instance.EndTokenSelection();
+        });
     }
+
 
     private IEnumerator ClickPopRoutine()
     {

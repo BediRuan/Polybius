@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8e90c2407f7b044a5693f2536eeab0, type: 3}
+  m_Name: Rohonc
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  id: 
+  cardName: Rohonc Codex
+  artwork: {fileID: 21300000, guid: 6897e634a02e3ff408b6445c0bee7391, type: 3}
+  cost: 2
+  damage: 0
+  hitCount: 3
+  healAmount: 0
+  description: 
+  prefab: {fileID: 1004518401466487839, guid: 1cf656e97c61f974987934f243dc28ca, type: 3}
+  triggersTokenSelection: 0
+  hitInterval: 0.2
+  discardCount: 0
+  drawCount: 0

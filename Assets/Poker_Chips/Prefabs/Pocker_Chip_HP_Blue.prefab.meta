@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1e15d0e7f02fa5148bf47389d44b2277
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Prefabs/Pocker_Chip_HP_Blue.prefab
+  uploadId: 658259

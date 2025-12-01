@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,26 +8,30 @@ public class HandCardView : MonoBehaviour,
     IPointerDownHandler, IPointerUpHandler
 {
     [Header("Movement")]
-    public float moveSpeed = 10f;          // Î»ÖÃ²åÖµËÙ¶È
-    public float rotateSpeed = 8f;         // Ğı×ª²åÖµËÙ¶È
+    public float moveSpeed = 10f;
+    public float rotateSpeed = 8f;
 
     [Header("Layout (from HandManager)")]
-    [HideInInspector] public Vector2 deckPosition; // »¡ĞÎÖĞµÄÄ¿±êÎ»ÖÃ
-    [HideInInspector] public float deckAngle;      // »¡ĞÎÖĞµÄĞı×ª½Ç¶È£¨Z£©
+    [HideInInspector] public Vector2 deckPosition;
+    [HideInInspector] public float deckAngle;
 
     [Header("Hover")]
-    public float hoverOffsetY = 40f;      // ĞüÍ£Ê±ÏòÉÏÌ§¸ß¶àÉÙ
-    public float hoverScale = 1.1f;       // ĞüÍ£Ê±·Å´ó±¶Êı
+    public float hoverOffsetY = 40f;
+    public float hoverScale = 1.1f;
 
     [Header("Drag")]
-    public float dragScale = 0.9f;        // ÍÏ×§Ê±ËõĞ¡Ò»µãµã
+    public float dragScale = 0.9f;
     [Range(0f, 1f)]
-    public float playYPercentMin = 0.25f; // Êó±êÔÚÆÁÄ»¸ß¶ÈÖĞÕ¼±È£¬´óÓÚÕâ¸ö¾ÍËã¡°´ò³ö¡±
+    public float playYPercentMin = 0.25f;
 
     [Header("Optional")]
-    public Camera uiCamera;               // ScreenSpace-Overlay ¿ÉÒÔÁô¿Õ
+    public Camera uiCamera;
 
-    public Action<HandCardView> onPlay;   // Í¨Öª HandManager£ºÕâÕÅÅÆ±»´ò³ö
+    public Action<HandCardView> onPlay;
+
+    // ğŸ”µ æ–°å¢ï¼šç”¨äºå¼ƒç‰Œé€‰æ‹©
+    public Action<HandCardView> onClick;
+    private bool selectable = false;
 
     private RectTransform rect;
     private RectTransform handRect;
@@ -41,14 +45,11 @@ public class HandCardView : MonoBehaviour,
         handRect = transform.parent as RectTransform;
         startScale = transform.localScale;
 
-        // ? Èç¹ûÃ»ÔÚ Inspector ÀïÊÖ¶¯Ö¸¶¨ uiCamera£¬¾Í×Ô¶¯´Ó Canvas ÄÃ
         if (uiCamera == null)
         {
             var canvas = GetComponentInParent<Canvas>();
             if (canvas != null)
-            {
-                uiCamera = canvas.worldCamera; // Screen Space - Camera/World Space »áÓÃÕâ¸ö
-            }
+                uiCamera = canvas.worldCamera;
         }
     }
 
@@ -63,20 +64,22 @@ public class HandCardView : MonoBehaviour,
         Vector3 targetScale = startScale;
         float targetAngle = deckAngle;
 
-        // ĞüÍ££ºÉÏ¸¡ + ·Å´ó
-        if (isHover && !isDragging)
+        // ğŸ”µ å¦‚æœæ˜¯â€œå¯é€‰æ‹©çŠ¶æ€â€ï¼Œè®©ç‰Œæœ‰ä¸€ç‚¹æç¤ºï¼ˆæ”¾å¤§ï¼‰
+        if (selectable && !isDragging)
+            targetScale = startScale * 1.15f;
+
+        if (isHover && !isDragging && !selectable)
         {
             targetPos += Vector2.up * hoverOffsetY;
             targetScale = startScale * hoverScale;
         }
 
-        // ÍÏ×§£º¸úËæÊó±ê + ÉÔÎ¢ËõĞ¡ + ½Ç¶È¹éÁã
         if (isDragging)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 handRect,
                 Input.mousePosition,
-                uiCamera, // overlay Ä£Ê½¿ÉÎª null
+                uiCamera,
                 out Vector2 localPos
             );
             targetPos = localPos;
@@ -84,23 +87,30 @@ public class HandCardView : MonoBehaviour,
             targetAngle = 0f;
         }
 
-        rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, targetPos, Time.deltaTime * moveSpeed);
-        rect.localScale = Vector3.Lerp(rect.localScale, targetScale, Time.deltaTime * moveSpeed);
-        rect.localRotation = Quaternion.Lerp(
-            rect.localRotation,
-            Quaternion.Euler(0f, 0f, targetAngle),
-            Time.deltaTime * rotateSpeed
-        );
+        rect.anchoredPosition =
+            Vector2.Lerp(rect.anchoredPosition, targetPos, Time.deltaTime * moveSpeed);
+
+        rect.localScale =
+            Vector3.Lerp(rect.localScale, targetScale, Time.deltaTime * moveSpeed);
+
+        rect.localRotation =
+            Quaternion.Lerp(rect.localRotation,
+                Quaternion.Euler(0f, 0f, targetAngle),
+                Time.deltaTime * rotateSpeed);
     }
 
-    // ÓÉ HandManager µ÷ÓÃ£¬¸üĞÂÕâÕÅÅÆÔÚ¡°»¡ĞÎ¶ÓÁĞ¡±ÖĞµÄ»ù´¡Î»ÖÃ/½Ç¶È
     public void SetDeckState(Vector2 pos, float angle)
     {
         deckPosition = pos;
         deckAngle = angle;
     }
 
-    // ========= Êó±êÊÂ¼ş =========
+    public void SetSelectable(bool value)
+    {
+        selectable = value;
+    }
+
+    // ========= é¼ æ ‡äº‹ä»¶ =========
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -110,7 +120,6 @@ public class HandCardView : MonoBehaviour,
             transform.SetAsLastSibling();
         }
     }
-
 
     public void OnPointerExit(PointerEventData eventData)
     {
@@ -126,14 +135,18 @@ public class HandCardView : MonoBehaviour,
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
-        // ÔÚ Token Ä£Ê½ÏÂ£¬½ûÖ¹¿ªÊ¼ÍÏ×§£¬±ÜÃâºÍµãÊı×Ö³åÍ»
+        if (selectable)
+        {
+            // ğŸ”µ åœ¨é€‰æ‹©æ¨¡å¼ä¸‹ï¼Œç‚¹å‡» = å¼ƒç‰Œ
+            onClick?.Invoke(this);
+            return;
+        }
+
         if (IsTokenModeActive())
             return;
 
         isDragging = true;
         isHover = false;
-
-        // Ìáµ½×îÉÏ²ãäÖÈ¾
         transform.SetAsLastSibling();
     }
 
@@ -142,11 +155,15 @@ public class HandCardView : MonoBehaviour,
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
-        // ÔÚ Token Ä£Ê½ÏÂ£¬ÍêÈ«ºöÂÔÌ§ÆğÊÂ¼ş£¨²»´òÅÆ¡¢²»¸Ä±ä×´Ì¬£©
+        if (selectable)
+        {
+            // ğŸ”µ é˜²æ­¢æ‹–åŠ¨è§¦å‘
+            return;
+        }
+
         if (IsTokenModeActive())
             return;
 
-        // ¸ù¾İÆÁÄ»¸ß¶ÈÅĞ¶ÏÊÇ·ñ¡°´ò³ö¡±
         float yPercent = Input.mousePosition.y / Screen.height;
         bool shouldPlay = yPercent > playYPercentMin;
 
@@ -154,14 +171,11 @@ public class HandCardView : MonoBehaviour,
         isHover = false;
 
         if (shouldPlay)
-        {
             onPlay?.Invoke(this);
-        }
     }
 
     private bool IsTokenModeActive()
     {
         return TokenManager.Instance != null && TokenManager.Instance.isSelecting;
     }
-
 }

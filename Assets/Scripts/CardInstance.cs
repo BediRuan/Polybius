@@ -13,8 +13,11 @@ public class CardInstance
     public int cost;
     public int damage;
     public int hitCount;
-    public int healAmount;   // ? 回复量
-    // 以后可以再加：block、drawCount、加能量等
+    public int healAmount;   // 回复量
+
+    // ?? 新增：弃牌数 & 抽牌数（可被 Token 改）
+    public int discardCount;
+    public int drawCount;
 
     public CardInstance(CardData template)
     {
@@ -24,5 +27,9 @@ public class CardInstance
         damage = template.damage;
         hitCount = template.hitCount;
         healAmount = template.healAmount;   // 从模板拷贝
+
+        // ?? 新增：从模板拷贝弃牌 / 抽牌数
+        discardCount = template.discardCount;
+        drawCount = template.drawCount;
     }
 }

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d55166c188e75234aa9f4f5991b5472c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Prefabs/Pocker_Chip_MP_Green.prefab
+  uploadId: 658259

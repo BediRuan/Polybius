@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 
 public class TokenNumberOnCard : TokenNumberBase
@@ -8,7 +8,10 @@ public class TokenNumberOnCard : TokenNumberBase
         CardCost,
         CardDamage,
         CardHitCount,
-        CardHeal
+        CardHeal,
+        // ğŸ”µ æ–°å¢ï¼š
+        CardDiscardCount,
+        CardDrawCount
     }
 
     public NumberType numberType;
@@ -23,7 +26,7 @@ public class TokenNumberOnCard : TokenNumberBase
 
     protected override bool CanUseToken()
     {
-        // ±ØĞëÊÇ Token Ä£Ê½ + ÓĞÓĞĞ§µÄ CardInstance
+        // å¿…é¡»æ˜¯ Token æ¨¡å¼ + æœ‰æœ‰æ•ˆçš„ CardInstance
         return base.CanUseToken() && cardUI != null && cardUI.card != null;
     }
 
@@ -33,30 +36,45 @@ public class TokenNumberOnCard : TokenNumberBase
         if (card == null)
             return;
 
+        // ä¸å…è®¸è´Ÿæ•°
+        newValue = Mathf.Max(0, newValue);
+
         switch (numberType)
         {
             case NumberType.CardCost:
                 card.cost = newValue;
-                Debug.Log($"Token ĞŞ¸Ä£º{card.template.cardName} µÄ·ÑÓÃ¸ÄÎª {newValue}");
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„è´¹ç”¨æ”¹ä¸º {newValue}");
                 break;
 
             case NumberType.CardDamage:
                 card.damage = newValue;
-                Debug.Log($"Token ĞŞ¸Ä£º{card.template.cardName} µÄÉËº¦¸ÄÎª {newValue}");
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„ä¼¤å®³æ”¹ä¸º {newValue}");
                 break;
 
             case NumberType.CardHitCount:
                 card.hitCount = newValue;
-                Debug.Log($"Token ĞŞ¸Ä£º{card.template.cardName} µÄ´ÎÊı¸ÄÎª {newValue}");
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„æ¬¡æ•°æ”¹ä¸º {newValue}");
                 break;
 
             case NumberType.CardHeal:
                 card.healAmount = newValue;
-                Debug.Log($"Token ĞŞ¸Ä£º{card.template.cardName} µÄÖÎÁÆÁ¿¸ÄÎª {newValue}");
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„æ²»ç–—é‡æ”¹ä¸º {newValue}");
+                break;
+
+            // ğŸ”µ æ–°å¢ï¼šå¼ƒç‰Œæ•°
+            case NumberType.CardDiscardCount:
+                card.discardCount = newValue;
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„å¼ƒç‰Œæ•°æ”¹ä¸º {newValue}");
+                break;
+
+            // ğŸ”µ æ–°å¢ï¼šæŠ½ç‰Œæ•°
+            case NumberType.CardDrawCount:
+                card.drawCount = newValue;
+                Debug.Log($"Token ä¿®æ”¹ï¼š{card.template.cardName} çš„æŠ½ç‰Œæ•°æ”¹ä¸º {newValue}");
                 break;
         }
 
-        // ¸ÄÍêÊıÖµË¢ĞÂ UI£¨»á¸üĞÂËùÓĞ TMP Êı×Ö£©
+        // æ”¹å®Œæ•°å€¼åˆ·æ–° UIï¼ˆä¼šæ›´æ–°æ‰€æœ‰ TMP æ•°å­—ï¼‰
         cardUI.Refresh();
     }
 }

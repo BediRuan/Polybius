@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 987a5b0851336d042b50f976a02cf626
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Materials/Mid_Poly/Pocker_Chip_MP_White.mat
+  uploadId: 658259

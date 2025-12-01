@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0fb06599abf772f4aaa42e8a15083222
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Materials/High_Poly/Pocker_Chip_HP_Red.mat
+  uploadId: 658259

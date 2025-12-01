@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 355f9048a41bbbb448c1c91688bcbbb8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Prefabs/Pocker_Chip_MP_Blue.prefab
+  uploadId: 658259

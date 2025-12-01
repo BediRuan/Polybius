@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 56b2e8b1075a5504382d568831132c82
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 208926
+  packageName: Poker chips
+  packageVersion: 2.0
+  assetPath: Assets/Poker_Chips/Prefabs/Pocker_Chip_HP_Green.prefab
+  uploadId: 658259
