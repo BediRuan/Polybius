@@ -654,10 +654,10 @@ MonoBehaviour:
   active: 1
   _weight:
     m_OverrideState: 1
-    m_Value: 0.067
+    m_Value: 0.077
   _tape:
     m_OverrideState: 1
-    m_Value: 0.75
+    m_Value: 0.632
   _shades:
     m_OverrideState: 1
     m_Value: 3
@@ -687,7 +687,7 @@ MonoBehaviour:
     m_Value: {r: 0, g: 1, b: 0.9685726, a: 1}
   _bleed:
     m_OverrideState: 1
-    m_Value: 0.78
+    m_Value: 0.42
   _flow:
     m_OverrideState: 1
     m_Value: 0

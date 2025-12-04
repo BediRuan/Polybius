@@ -18,7 +18,7 @@ public class CardInstance
     // ?? 新增：弃牌数 & 抽牌数（可被 Token 改）
     public int discardCount;
     public int drawCount;
-
+    public int powerStacksToAdd;
     public CardInstance(CardData template)
     {
         this.template = template;
@@ -31,5 +31,7 @@ public class CardInstance
         // ?? 新增：从模板拷贝弃牌 / 抽牌数
         discardCount = template.discardCount;
         drawCount = template.drawCount;
+
+        powerStacksToAdd = template.powerStacksToAdd;
     }
 }

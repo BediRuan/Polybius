@@ -148,6 +148,10 @@ public class HandManager : MonoBehaviour
 
     private void OnCardPlayed(HandCardView view)
     {
+        if (EnemyAI.Instance != null)
+        {
+            EnemyAI.Instance.HandleTrigger(EnemyIntentTriggerTiming.OnPlayerCardPlayed);
+        }
         CardUI ui = view.GetComponent<CardUI>();
         if (ui == null || ui.card == null)
             return;
@@ -171,6 +175,12 @@ public class HandManager : MonoBehaviour
             Debug.Log($"[HandManager] 卡牌 {card.template.cardName} 使用失败，留在手牌中。");
             // HandCardView 自己应该会把位置插值回弧形上的目标位置
             return;
+        }
+
+        // 🌟 通知 TurnManager：有一张牌成功打出了
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.RegisterCardPlayed(card);
         }
 
         // 只有真正成功打出时，才进入弃牌堆并销毁 UI

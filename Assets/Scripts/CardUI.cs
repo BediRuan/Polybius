@@ -18,6 +18,7 @@ public class CardUI : MonoBehaviour
     // 新增：弃牌 / 抽牌数字
     public TMP_Text discardCountNumberText;
     public TMP_Text drawCountNumberText;
+    public TMP_Text powerStacksToAddText;
 
     [Header("Data")]
     public CardInstance card;   // 运行时实例，而不是 CardData
@@ -70,6 +71,9 @@ public class CardUI : MonoBehaviour
 
         if (drawCountNumberText != null)
             drawCountNumberText.text = card.drawCount.ToString();
+
+        if (powerStacksToAddText != null)
+            powerStacksToAddText.text = card.powerStacksToAdd.ToString();
     }
 
     /// <summary>

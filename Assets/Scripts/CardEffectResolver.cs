@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CardEffectResolver : MonoBehaviour
 {
-    public HandManager handManager;   // 需要在 Inspector 连到 HandManager
+    public HandManager handManager;   // 在 Inspector 连到 HandManager
 
     public bool Resolve(CardInstance card)
     {
@@ -23,24 +23,35 @@ public class CardEffectResolver : MonoBehaviour
 
         // --- 伤害 ---
         int times = Mathf.Max(1, card.hitCount);
-        float interval = card.template.hitInterval;   // hitInterval 现在还是模板上的设定
+        float interval = card.template.hitInterval;   // 间隔设定仍然从模板
 
         if (card.damage > 0 && EnemyHealth.Instance != null)
         {
+            // 先根据力量 buff 修改每击伤害
+            int damagePerHit = GetModifiedDamage(card.damage);
+
             if (times <= 1 || interval <= 0f)
             {
                 for (int i = 0; i < times; i++)
-                    EnemyHealth.Instance.TakeDamage(card.damage);
+                    EnemyHealth.Instance.TakeDamage(damagePerHit);
             }
             else
             {
-                StartCoroutine(DoMultiHitDamage(card.damage, times, interval));
+                StartCoroutine(DoMultiHitDamage(damagePerHit, times, interval));
             }
         }
 
         // --- 治疗 ---
         if (card.healAmount > 0)
             PlayerHealth.Instance?.Heal(card.healAmount);
+
+        
+        // --- 力量 buff（可以被 token 修改） ---
+        if (card.powerStacksToAdd > 0 && PlayerBuffManager.Instance != null)
+        {
+            PlayerBuffManager.Instance.AddPowerStacks(card.powerStacksToAdd);
+        }
+
 
         // --- Token 模式 ---
         if (card.template.triggersTokenSelection)
@@ -50,7 +61,7 @@ public class CardEffectResolver : MonoBehaviour
         //      弃牌 + 抽牌
         // =========================
 
-        // ? 关键：用实例上的数值，这些可以被 Token 修改
+        // 关键：用实例上的数值，这些可以被 Token 修改
         int discardCount = Mathf.Max(0, card.discardCount);
         int drawCount = Mathf.Max(0, card.drawCount);
 
@@ -85,6 +96,17 @@ public class CardEffectResolver : MonoBehaviour
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 让所有伤害都经过力量 buff 修正
+    /// </summary>
+    private int GetModifiedDamage(int baseDamage)
+    {
+        if (PlayerBuffManager.Instance != null)
+            return PlayerBuffManager.Instance.ModifyDamage(baseDamage);
+
+        return baseDamage;
     }
 
     private IEnumerator DoMultiHitDamage(int damage, int times, float interval)

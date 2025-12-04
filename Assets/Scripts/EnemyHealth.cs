@@ -20,11 +20,15 @@ public class EnemyHealth : MonoBehaviour
     public event Action<int[], int[]> OnSegmentsChanged;          // segmentCurrents, segmentMaxes
     public event Action OnDead;
 
-    [Header("Damage Numbers")]
-    public DamageNumberGUI damageNumberPrefab;   // 拖 GUI 预制体
+    [Header("Damage / Heal Numbers")]
+    public DamageNumberGUI damageNumberPrefab;   // 伤害数字 prefab
+    public DamageNumberGUI healNumberPrefab;     // 治疗数字 prefab（你新建的）
     public RectTransform damageNumberParent;     // 一般就是主 Canvas 下面的一个 RectTransform
-    public Vector2 damageNumberOffset;           // 相对敌人位置的偏移（比如 (0, 50) 往上偏一点）
+    [Tooltip("伤害数字的偏移")]
+    public Vector2 damageNumberOffset = new Vector2(0, 60);
 
+    [Tooltip("治疗数字的偏移")]
+    public Vector2 healNumberOffset = new Vector2(0, 80);   // ← 新增
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -128,18 +132,30 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 敌人回复生命（正值 = 回复）
+    /// </summary>
     public void Heal(int amount)
     {
         if (amount <= 0) return;
 
-        if (useSegments && segmentCurrentHPs != null && segmentCurrentHPs.Length > 0)
+        if (useSegments && segmentCurrentHPs != null && segmentMaxHPs != null && segmentMaxHPs.Length > 0)
         {
             // 简单示例：把回复量加到第 1 条血上，你之后可以设计更复杂的逻辑
             int i = 0;
-            int max = segmentMaxHPs != null && segmentMaxHPs.Length > 0 ? segmentMaxHPs[0] : 0;
+            int max = Mathf.Max(0, segmentMaxHPs[0]);
             if (max > 0)
             {
-                segmentCurrentHPs[0] = Mathf.Clamp(segmentCurrentHPs[0] + amount, 0, max);
+                int old = segmentCurrentHPs[0];
+                int newCur = Mathf.Clamp(old + amount, 0, max);
+                int healed = newCur - old;
+                segmentCurrentHPs[0] = newCur;
+
+                if (healed > 0)
+                {
+                    ShowHealNumber(healed);
+                }
             }
 
             Debug.Log($"敌人回复 {amount} 点生命，多条血：{GetSegmentsDebug()}");
@@ -147,8 +163,15 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
+            int old = currentHP;
             currentHP += amount;
             if (currentHP > maxHP) currentHP = maxHP;
+
+            int healed = currentHP - old;
+            if (healed > 0)
+            {
+                ShowHealNumber(healed);
+            }
 
             Debug.Log($"敌人回复 {amount} 点生命，当前 HP：{currentHP}/{maxHP}");
             NotifyAll();
@@ -167,7 +190,14 @@ public class EnemyHealth : MonoBehaviour
             return;
 
         int max = Mathf.Max(1, segmentMaxHPs[index]); // 至少 1
+        int old = segmentCurrentHPs[index];
         segmentCurrentHPs[index] = Mathf.Clamp(value, 0, max);
+        int delta = segmentCurrentHPs[index] - old;
+
+        if (delta < 0)
+            ShowDamageNumber(-delta);
+        else if (delta > 0)
+            ShowHealNumber(delta);
 
         Debug.Log($"[Token] 设置敌人第 {index + 1} 条血为 {segmentCurrentHPs[index]}/{max}");
         NotifyAll();
@@ -187,12 +217,20 @@ public class EnemyHealth : MonoBehaviour
         segmentMaxHPs[index] = Mathf.Max(1, value);
         if (clampCurrent)
         {
+            int old = segmentCurrentHPs[index];
             segmentCurrentHPs[index] = Mathf.Clamp(segmentCurrentHPs[index], 0, segmentMaxHPs[index]);
+            int delta = segmentCurrentHPs[index] - old;
+
+            if (delta < 0)
+                ShowDamageNumber(-delta);
+            else if (delta > 0)
+                ShowHealNumber(delta);
         }
 
         Debug.Log($"[Token] 设置第 {index + 1} 条血的最大值为 {segmentMaxHPs[index]}，当前 {segmentCurrentHPs[index]}");
         NotifyAll();
     }
+
     /// <summary>
     /// Token：直接设置敌人的“总当前 HP”（单条血用；多条血时自动拆到各条上）
     /// </summary>
@@ -200,6 +238,11 @@ public class EnemyHealth : MonoBehaviour
     {
         if (useSegments && segmentCurrentHPs != null && segmentMaxHPs != null)
         {
+            // 计算修改前总血量
+            int oldTotal = 0;
+            for (int i = 0; i < segmentCurrentHPs.Length; i++)
+                oldTotal += Mathf.Max(0, segmentCurrentHPs[i]);
+
             // 多条血：把总血量按顺序灌满每一条
             int remaining = Mathf.Max(0, value);
 
@@ -210,6 +253,17 @@ public class EnemyHealth : MonoBehaviour
                 segmentCurrentHPs[i] = newCur;
                 remaining -= newCur;
             }
+
+            // 计算修改后总血量
+            int newTotal = 0;
+            for (int i = 0; i < segmentCurrentHPs.Length; i++)
+                newTotal += Mathf.Max(0, segmentCurrentHPs[i]);
+
+            int delta = newTotal - oldTotal;
+            if (delta < 0)
+                ShowDamageNumber(-delta);
+            else if (delta > 0)
+                ShowHealNumber(delta);
 
             Debug.Log($"[Token] 设置敌人总当前 HP 为 {value}（多条血）: {GetSegmentsDebug()}");
             NotifyAll();
@@ -234,7 +288,14 @@ public class EnemyHealth : MonoBehaviour
         {
             // 单条血逻辑
             maxHP = Mathf.Max(1, maxHP);
+            int old = currentHP;
             currentHP = Mathf.Clamp(value, 0, maxHP);
+            int delta = currentHP - old;
+
+            if (delta < 0)
+                ShowDamageNumber(-delta);
+            else if (delta > 0)
+                ShowHealNumber(delta);
 
             Debug.Log($"[Token] 设置敌人当前 HP 为 {currentHP}/{maxHP}");
             NotifyAll();
@@ -246,32 +307,6 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
-    private void ShowDamageNumber(int amount)
-    {
-        if (amount <= 0)
-        {
-            Debug.Log("[DamageNumber] amount <= 0，不生成数字");
-            return;
-        }
-
-        if (damageNumberPrefab == null)
-        {
-            Debug.LogWarning("[DamageNumber] damageNumberPrefab 未绑定");
-            return;
-        }
-
-        if (damageNumberParent == null)
-        {
-            Debug.LogWarning("[DamageNumber] damageNumberParent 未绑定");
-            return;
-        }
-
-        Vector2 anchoredPos = damageNumberOffset;  // 简单版：就在 parent 里的这个位置
-        damageNumberPrefab.SpawnGUI(damageNumberParent, anchoredPos, amount);
-
-        Debug.Log($"[DamageNumber] SpawnGUI：parent={damageNumberParent.name}, anchoredPos={anchoredPos}, amount={amount}");
-    }
-
 
     /// <summary>
     /// Token：设置敌人的“总最大 HP”
@@ -292,11 +327,19 @@ public class EnemyHealth : MonoBehaviour
             {
                 float ratio = oldTotalMax > 0 ? (float)segmentMaxHPs[i] / oldTotalMax : 1f / segmentMaxHPs.Length;
                 int newMax = Mathf.Max(1, Mathf.RoundToInt(newTotalMax * ratio));
+
+                int oldCur = segmentCurrentHPs[i];
                 segmentMaxHPs[i] = newMax;
 
                 if (clampCurrent)
                 {
                     segmentCurrentHPs[i] = Mathf.Clamp(segmentCurrentHPs[i], 0, newMax);
+                    int delta = segmentCurrentHPs[i] - oldCur;
+
+                    if (delta < 0)
+                        ShowDamageNumber(-delta);
+                    else if (delta > 0)
+                        ShowHealNumber(delta);
                 }
             }
 
@@ -305,16 +348,79 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
+            int old = currentHP;
             maxHP = Mathf.Max(1, value);
             if (clampCurrent)
             {
                 currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+                int delta = currentHP - old;
+
+                if (delta < 0)
+                    ShowDamageNumber(-delta);
+                else if (delta > 0)
+                    ShowHealNumber(delta);
             }
 
             Debug.Log($"[Token] 设置敌人最大 HP 为 {maxHP}，当前 {currentHP}");
             NotifyAll();
         }
     }
+
+    // ----------- 数字显示 -----------
+
+    private void ShowDamageNumber(int amount)
+    {
+        if (amount <= 0)
+        {
+            Debug.Log("[DamageNumber] amount <= 0，不生成伤害数字");
+            return;
+        }
+
+        if (damageNumberPrefab == null)
+        {
+            Debug.LogWarning("[DamageNumber] damageNumberPrefab 未绑定");
+            return;
+        }
+
+        if (damageNumberParent == null)
+        {
+            Debug.LogWarning("[DamageNumber] damageNumberParent 未绑定");
+            return;
+        }
+
+        Vector2 anchoredPos = damageNumberOffset;   // ← 使用伤害 offset
+        damageNumberPrefab.SpawnGUI(damageNumberParent, anchoredPos, amount);
+
+        Debug.Log($"[DamageNumber] SpawnGUI（伤害）：parent={damageNumberParent.name}, anchoredPos={anchoredPos}, amount={amount}");
+    }
+
+    private void ShowHealNumber(int amount)
+    {
+        if (amount <= 0)
+        {
+            Debug.Log("[HealNumber] amount <= 0，不生成治疗数字");
+            return;
+        }
+
+        if (healNumberPrefab == null)
+        {
+            Debug.LogWarning("[HealNumber] healNumberPrefab 未绑定");
+            return;
+        }
+
+        if (damageNumberParent == null)
+        {
+            Debug.LogWarning("[HealNumber] damageNumberParent 未绑定");
+            return;
+        }
+
+        Vector2 anchoredPos = healNumberOffset;     // ← 使用治疗 offset
+        healNumberPrefab.SpawnGUI(damageNumberParent, anchoredPos, amount);
+
+        Debug.Log($"[HealNumber] SpawnGUI（治疗）：parent={damageNumberParent.name}, anchoredPos={anchoredPos}, amount={amount}");
+    }
+
+    // ---------------- 通知 UI & debug ----------------
 
     private void NotifyAll()
     {

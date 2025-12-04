@@ -16,7 +16,11 @@ public class CardData : ScriptableObject
     public int hitCount;    // 攻击次数
     public int healAmount;  // 回复生命量（不是治疗卡就填 0）
     [Header("Draw / Discard Settings")]
-    
+
+    public int powerStacksToAdd = 0;
+
+    [Header("Special Effects")]
+    public bool cancelEnemyIntentIfOver4 = false;
 
     [TextArea(2, 5)]
     public string description;

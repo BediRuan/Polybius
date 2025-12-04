@@ -11,7 +11,8 @@ public class TokenNumberOnCard : TokenNumberBase
         CardHeal,
         // 🔵 新增：
         CardDiscardCount,
-        CardDrawCount
+        CardDrawCount,
+        CardPowerStacksToAdd   // 新增：力量层数
     }
 
     public NumberType numberType;
@@ -71,6 +72,11 @@ public class TokenNumberOnCard : TokenNumberBase
             case NumberType.CardDrawCount:
                 card.drawCount = newValue;
                 Debug.Log($"Token 修改：{card.template.cardName} 的抽牌数改为 {newValue}");
+                break;
+
+            case NumberType.CardPowerStacksToAdd:
+                card.powerStacksToAdd = newValue;
+                Debug.Log($"Token 修改：{card.template.cardName} 的力量层数改为 {newValue}");
                 break;
         }
 
